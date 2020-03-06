@@ -11,5 +11,6 @@ namespace stock_api.Domain.Entities
         public float Closing { get; set; }
         public float Min { get; set; }
         public float Max { get; set; }
+        String Timestamp { get; set; }
     }
 }
