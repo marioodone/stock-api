@@ -1,10 +1,9 @@
 ﻿
-using Microsoft.Extensions.Configuration;
-using System;
 using System.Collections.Generic;
-using System.Text;
+using Microsoft.Extensions.Configuration;
+using stock_api.Infra;
 
-namespace stock_api.Infra
+namespace History_api.Infra.Repositories
 {
     public abstract class AbstractRepository<T>
     {

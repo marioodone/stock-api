@@ -1,10 +1,11 @@
-﻿using Dapper;
+﻿using System.Collections.Generic;
+using System.Data;
+using System.Linq;
+using Dapper;
+using History_api.Infra.Repositories;
 using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Configuration;
 using stock_api.Domain.Entities;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
 
 namespace stock_api.Infra.Repositories
 {
