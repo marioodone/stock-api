@@ -14,11 +14,16 @@ namespace stock_api.Infra
         {
             var connectionString = configuration.GetSection("DBInfo:ConnectionString").Value;
             var dbFilePath = configuration.GetSection("DBInfo:FilePath").Value;
-
+            var dbDir = configuration.GetSection("DBInfo:FileDirectory").Value;
            
 
             if (!File.Exists(dbFilePath))
             {
+                if (!Directory.Exists(dbDir)) 
+                {
+                    Directory.CreateDirectory(dbDir);
+                }
+
                 _dbConnection = new SqliteConnection(connectionString);
                 _dbConnection.Open();
 
