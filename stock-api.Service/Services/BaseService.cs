@@ -12,7 +12,7 @@ namespace stock_api.Service.Services
     {
         protected IRepository<T> repository;
 
-        public T Post<V>(T obj) where V : AbstractValidator<T>
+        public virtual T Post<V>(T obj) where V : AbstractValidator<T>
         {
             Validate(obj, Activator.CreateInstance<V>());
 
@@ -46,7 +46,7 @@ namespace stock_api.Service.Services
             return repository.Select(id);
         }
 
-        private void Validate(T obj, AbstractValidator<T> validator)
+        protected void Validate(T obj, AbstractValidator<T> validator)
         {
             if (obj == null)
                 throw new Exception("Registros não detectados!");

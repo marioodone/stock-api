@@ -16,8 +16,19 @@ namespace stock_api.Service.Services
             repository = customRepository;
         }
 
+        public override Stock Post<V>(Stock obj)
+        {
+            base.Validate(obj, Activator.CreateInstance<V>());
 
-        public IList<Stock> SelectFomCode(string code)
+            if(SelectFomCode(obj.Code) != null)
+                throw new ArgumentException("The stock already exists.");
+
+            repository.Insert(obj);
+
+            return SelectFomCode(obj.Code);
+        }
+
+        public Stock SelectFomCode(string code)
         {
             if (string.IsNullOrEmpty(code))
                 throw new ArgumentException("The code can't be empty.");

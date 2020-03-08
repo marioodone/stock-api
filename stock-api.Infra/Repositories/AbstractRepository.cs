@@ -9,13 +9,14 @@ namespace History_api.Infra.Repositories
 {
     public abstract class AbstractRepository<T> : IRepository<T> where T : BaseEntity
     {
-        private string _connectionString;
+        private readonly string _connectionString;
         protected string ConnectionString => _connectionString;
+        
 
         public AbstractRepository(IConfiguration configuration)
         {
-            _connectionString = configuration.GetConnectionString("DBInfo:ConnectionString");
-            Seed.CreateDb(configuration);
+            this._connectionString = configuration.GetSection("DBInfo:ConnectionString").Value;
+            Seed.CreateDb(configuration);            
         }
 
         public abstract void Insert(T obj);
