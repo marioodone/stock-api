@@ -31,10 +31,10 @@ namespace stock_api.Service.Validators
                 .GreaterThan(0).WithMessage("Min value can't be negative.")
                 .NotNull().WithMessage("Is necessary inform the Min value.");
 
-            RuleFor(c => c.Openning)
-                .NotEqual(0).WithMessage("Is necessary inform the Openning value.")
-                .GreaterThan(0).WithMessage("Openning value can't be negative.")
-                .NotNull().WithMessage("Is necessary inform the Openning value.");
+            RuleFor(c => c.Opening)
+                .NotEqual(0).WithMessage("Is necessary inform the Opening value.")
+                .GreaterThan(0).WithMessage("Opening value can't be negative.")
+                .NotNull().WithMessage("Is necessary inform the Opening value.");
 
             RuleFor(c => c.Closing)
                .NotEqual(0).WithMessage("Is necessary inform the Closing value.")

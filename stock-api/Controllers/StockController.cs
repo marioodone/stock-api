@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using stock_api.Domain.Entities;
+using stock_api.Model;
 using stock_api.Service.Services;
 using stock_api.Service.Validators;
 
@@ -16,10 +18,12 @@ namespace stock_api.Controllers
     [ApiController]
     public class StockController : ControllerBase
     {
+        private readonly IMapper _mapper;
         private StockService service;
 
-        public StockController(IConfiguration configuration)
+        public StockController(IMapper mapper, IConfiguration configuration)
         {
+            _mapper = mapper;
             service = new StockService(configuration);
         }
 
@@ -49,7 +53,10 @@ namespace stock_api.Controllers
             try
             {
                 service.Put<StockValidator>(item);
-                return new ObjectResult(item.Id);
+
+                StockViewModel model = _mapper.Map<StockViewModel>(item);
+
+                return new ObjectResult(model);
             }
             catch (ArgumentNullException ex)
             {
@@ -85,8 +92,16 @@ namespace stock_api.Controllers
         public IActionResult Get()
         {
             try
-            {               
-                return new ObjectResult(service.Get());
+            {
+                var list = service.Get();
+                var listModel = new List<StockViewModel>();
+
+                for (int i = 0; i < list.Count; i++)
+                {
+                    listModel.Add(_mapper.Map<StockViewModel>(list[i]));
+                }
+
+                return new ObjectResult(listModel);
             }
             catch (ArgumentNullException ex)
             {
@@ -104,7 +119,9 @@ namespace stock_api.Controllers
         {
             try
             {
-                return new ObjectResult(service.Get(id));
+                StockViewModel model = _mapper.Map<StockViewModel>(service.Get(id));
+
+                return new ObjectResult(model);
             }
             catch (ArgumentNullException ex)
             {
@@ -122,7 +139,8 @@ namespace stock_api.Controllers
         {
             try
             {
-                return new ObjectResult(service.SelectFomCode(code));
+                StockViewModel model = _mapper.Map<StockViewModel>(service.SelectFomCode(code));
+                return new ObjectResult(model);
             }
             catch (ArgumentNullException ex)
             {

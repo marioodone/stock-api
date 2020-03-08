@@ -22,5 +22,13 @@ namespace stock_api.Service.Services
 
             return customRepository.SelectAllFromStock(idStock);
         }
+
+        public IList<History> SelectAllFromStockCode(string code)
+        {
+            if (string.IsNullOrEmpty(code))
+                throw new ArgumentException("The code can't be empty.");
+
+            return customRepository.SelectAllFromStock(code);
+        }
     }
 }

@@ -34,7 +34,7 @@ namespace stock_api.Infra
                     CREATE TABLE IF NOT EXISTS [History] (
                         [Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
                         [IdStock] INTEGER NOT NULL,    
-                        [Openning] DECIMAL(5,2) NOT NULL,
+                        [Opening] DECIMAL(5,2) NOT NULL,
                         [Closing] DECIMAL(5,2) NOT NULL,
                         [Max] DECIMAL(5,2) NOT NULL,
                         [Min] DECIMAL(5,2) NOT NULL,

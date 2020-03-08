@@ -12,23 +12,23 @@ namespace stock_api.Domain.Entities
 
         [Required]
         [Display(Name = "Oppening value")]
-        [Range(0, float.MaxValue, ErrorMessage = "This value cannot be negative.")]
-        public float Openning { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "This value cannot be negative.")]
+        public double Opening { get; set; }
 
         [Required]
         [Display(Name = "Closing value")]
-        [Range(0, float.MaxValue, ErrorMessage = "This value cannot be negative.")]
-        public float Closing { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "This value cannot be negative.")]
+        public double Closing { get; set; }
 
         [Required]
         [Display(Name = "Minimum value")]
-        [Range(0, float.MaxValue, ErrorMessage = "This value cannot be negative.")]
-        public float Min { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "This value cannot be negative.")]
+        public double Min { get; set; }
 
         [Required]
         [Display(Name = "Maximum value")]
-        [Range(0, float.MaxValue, ErrorMessage = "This value cannot be negative.")]
-        public float Max { get; set; }
+        [Range(0, double.MaxValue, ErrorMessage = "This value cannot be negative.")]
+        public double Max { get; set; }
 
         [Required]
         [Display(Name = "Time of history")]

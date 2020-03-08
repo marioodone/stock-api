@@ -17,8 +17,8 @@ namespace History_api.Infra.Repositories
         {
             using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
             {
-                string sQuery = "INSERT INTO History (IdHistory, Oppening, Closing, Min, Max, Timestamp) "
-                              + "VALUES (@IdHistory, @Oppening, @Closing, @Min, @Max, @Timestamp)";
+                string sQuery = "INSERT INTO History (IdStock, Opening, Closing, Min, Max, Timestamp) "
+                              + "VALUES (@IdStock, @Opening, @Closing, @Min, @Max, @Timestamp)";
 
                 dbConnection.Open();
                 dbConnection.Execute(sQuery, obj);
@@ -41,7 +41,8 @@ namespace History_api.Infra.Repositories
         {
             using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
             {
-                string sQuery = "SELECT * FROM History "
+                string sQuery = "SELECT IdStock, cast(Opening as REAL) as Opening, cast(Closing as REAL) as Closing, cast(Min as REAL) as Min, cast(Max as REAL) as Max, Timestamp "
+                              + "FROM History "
                               + "WHERE Id = @Id";
 
                 dbConnection.Open();
@@ -53,7 +54,8 @@ namespace History_api.Infra.Repositories
         {
             using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
             {
-                string sQuery = "SELECT * FROM History";
+                string sQuery = "SELECT IdStock, cast(Opening as REAL) as Opening, cast(Closing as REAL) as Closing, cast(Min as REAL) as Min, cast(Max as REAL) as Max, Timestamp "
+                              + "FROM History ";
 
                 dbConnection.Open();
                 return dbConnection.Query<History>(sQuery).ToList();
@@ -64,11 +66,25 @@ namespace History_api.Infra.Repositories
         {
             using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
             {
-                string sQuery = "SELECT * FROM History "
-                               + "WHERE IdStock = @IdStock";
+                string sQuery = "SELECT IdStock, cast(Opening as REAL) as Opening, cast(Closing as REAL) as Closing, cast(Min as REAL) as Min, cast(Max as REAL) as Max, Timestamp "
+                              + "FROM History "
+                              + "WHERE IdStock = @IdStock";
 
                 dbConnection.Open();
                 return dbConnection.Query<History>(sQuery, new { IdStock = idStock}).ToList();
+            }
+        }
+
+        public IList<History> SelectAllFromStock(string code)
+        {
+            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            {
+                string sQuery = "SELECT H.IdStock, cast(Opening as REAL) as Opening, cast(Closing as REAL) as Closing, cast(Min as REAL) as Min, cast(Max as REAL) as Max, Timestamp FROM History AS H "
+                               + "JOIN Stock AS S   ON H.IdStock = S.Id "
+                               + "WHERE S.Code = @Code";
+
+                dbConnection.Open();
+                return dbConnection.Query<History>(sQuery, new { Code = code }).ToList();
             }
         }
 
