@@ -12,8 +12,11 @@ namespace stock_api.Infra
 
         public static void CreateDb(IConfiguration configuration)
         {
-            var connectionString = configuration.GetConnectionString("DBInfo:ConnectionString");
+            var connectionString = configuration.GetSection("DBInfo:ConnectionString").Value;
             var dbFilePath = configuration.GetSection("DBInfo:FilePath").Value;
+
+           
+
             if (!File.Exists(dbFilePath))
             {
                 _dbConnection = new SqliteConnection(connectionString);
@@ -30,12 +33,13 @@ namespace stock_api.Infra
                 _dbConnection.Execute(@"
                     CREATE TABLE IF NOT EXISTS [History] (
                         [Id] INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-                        [IdStock] INTEGER NOT NULL FOREGIN KEY REFERENCES Stock(Id),    
+                        [IdStock] INTEGER NOT NULL,    
                         [Openning] DECIMAL(5,2) NOT NULL,
                         [Closing] DECIMAL(5,2) NOT NULL,
                         [Max] DECIMAL(5,2) NOT NULL,
                         [Min] DECIMAL(5,2) NOT NULL,
-                        [Timestamp] NVARCHAR(10) NOT NULL
+                        [Timestamp] NVARCHAR(10) NOT NULL,
+                        FOREIGN KEY(IdStock) REFERENCES Stock(Id)
                     )
                 ");
 

@@ -15,7 +15,7 @@ namespace stock_api.Infra.Repositories
 
         public override void Insert(Stock obj)
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new SqliteConnection(base.ConnectionString))
             {
                 string sQuery = "INSERT INTO Stock (Code, Name) "
                               + "VALUES (@Code, @Name)";
@@ -27,7 +27,7 @@ namespace stock_api.Infra.Repositories
 
         public override void Remove(int id)
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new SqliteConnection(base.ConnectionString))
             {
                 string sQuery = "DELETE FROM Stock "
                               + "WHERE Id = @Id";
@@ -39,7 +39,7 @@ namespace stock_api.Infra.Repositories
 
         public override Stock Select(int id)
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new SqliteConnection(base.ConnectionString))
             {
                 string sQuery = "SELECT * FROM Stock "
                               + "WHERE Id = @Id";
@@ -49,21 +49,21 @@ namespace stock_api.Infra.Repositories
             }
         }
 
-        public IList<Stock> SelectFomCode(string code)
+        public Stock SelectFomCode(string code)
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new SqliteConnection(base.ConnectionString))
             {
                 string sQuery = "SELECT * FROM Stock "
                               + "WHERE Code = @Code";
 
                 dbConnection.Open();
-                return dbConnection.Query<Stock>(sQuery, new { Code = code }).ToList();
+                return dbConnection.Query<Stock>(sQuery, new { Code = code }).FirstOrDefault();
             }
         }
 
         public override IList<Stock> SelectAll()
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new SqliteConnection(base.ConnectionString))
             {
                 string sQuery = "SELECT * FROM Stock";
 
@@ -74,7 +74,7 @@ namespace stock_api.Infra.Repositories
 
         public override void Update(Stock obj)
         {
-            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            using (IDbConnection dbConnection = new SqliteConnection(base.ConnectionString))
             {
                 string sQuery = "UPDATE Stock "
                               + "SET Code = @Code, Name = @Name "
