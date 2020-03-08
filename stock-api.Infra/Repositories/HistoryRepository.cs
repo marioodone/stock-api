@@ -9,9 +9,9 @@ using System.Linq;
 
 namespace History_api.Infra.Repositories
 {
-    public class HistoryReposotory : AbstractRepository<History>
+    public class HistoryRepository : AbstractRepository<History>
     {
-        public HistoryReposotory(IConfiguration configuration) : base(configuration) { }
+        public HistoryRepository(IConfiguration configuration) : base(configuration) { }
 
         public override void Insert(History obj)
         {

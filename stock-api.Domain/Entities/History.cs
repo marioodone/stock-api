@@ -33,6 +33,6 @@ namespace stock_api.Domain.Entities
         [Required]
         [Display(Name = "Time of history")]
         [StringLength(10, ErrorMessage = "Time format is invalid.")]
-        String Timestamp { get; set; }
+       public  String Timestamp { get; set; }
     }
 }

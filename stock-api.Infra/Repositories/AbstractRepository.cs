@@ -1,11 +1,13 @@
 ﻿
 using System.Collections.Generic;
 using Microsoft.Extensions.Configuration;
+using stock_api.Domain.Entities;
+using stock_api.Domain.Interfaces;
 using stock_api.Infra;
 
 namespace History_api.Infra.Repositories
 {
-    public abstract class AbstractRepository<T>
+    public abstract class AbstractRepository<T> : IRepository<T> where T : BaseEntity
     {
         private string _connectionString;
         protected string ConnectionString => _connectionString;

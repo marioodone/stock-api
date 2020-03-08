@@ -9,9 +9,9 @@ using stock_api.Domain.Entities;
 
 namespace stock_api.Infra.Repositories
 {
-    public class StockReposotory : AbstractRepository<Stock>
+    public class StockRepository : AbstractRepository<Stock>
     {
-        public StockReposotory(IConfiguration configuration) : base(configuration) { }
+        public StockRepository(IConfiguration configuration) : base(configuration) { }
 
         public override void Insert(Stock obj)
         {
@@ -46,6 +46,18 @@ namespace stock_api.Infra.Repositories
 
                 dbConnection.Open();
                 return dbConnection.Query<Stock>(sQuery, new { Id = id }).FirstOrDefault();
+            }
+        }
+
+        public IList<Stock> SelectFomCode(string code)
+        {
+            using (IDbConnection dbConnection = new SqliteConnection(ConnectionString))
+            {
+                string sQuery = "SELECT * FROM Stock "
+                              + "WHERE Code = @Code";
+
+                dbConnection.Open();
+                return dbConnection.Query<Stock>(sQuery, new { Code = code }).ToList();
             }
         }
 
